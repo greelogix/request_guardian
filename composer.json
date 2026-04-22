@@ -1,5 +1,5 @@
 {
-  "name": "yourvendor/laravel-auto-validator",
+  "name": "greelogix/request_guardian",
   "description": "Automatic request validation for Laravel with smart field type detection.",
   "type": "library",
   "license": "MIT",
@@ -17,7 +17,8 @@
   },
   "autoload": {
     "psr-4": {
-      "YourVendor\\LaravelAutoValidator\\": "src/"
+      "YourVendor\\LaravelAutoValidator\\": "src/",
+      "Greelogix\\RequestGuardian\\": "src-greelogix/"
     }
   },
   "autoload-dev": {
@@ -28,7 +29,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "YourVendor\\LaravelAutoValidator\\LaravelAutoValidatorServiceProvider"
+        "Greelogix\\RequestGuardian\\RequestGuardianServiceProvider"
       ]
     }
   },

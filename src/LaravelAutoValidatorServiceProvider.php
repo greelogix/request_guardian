@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace YourVendor\LaravelAutoValidator;
 
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Factory as ValidationFactory;
 use YourVendor\LaravelAutoValidator\Http\Middleware\ValidateRequest;
@@ -15,6 +16,7 @@ use YourVendor\LaravelAutoValidator\Validators\DateValidator;
 use YourVendor\LaravelAutoValidator\Validators\FileValidator;
 use YourVendor\LaravelAutoValidator\Validators\NumericValidator;
 use YourVendor\LaravelAutoValidator\Validators\StringValidator;
+use Illuminate\Support\Facades\Validator;
 
 class LaravelAutoValidatorServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,26 @@ class LaravelAutoValidatorServiceProvider extends ServiceProvider
         if (config('auto-validator.enabled', true) && config('auto-validator.auto_middleware', false)) {
             $kernel->pushMiddleware(ValidateRequest::class);
         }
+
+        Request::macro('autoValidate', function () {
+            /** @var Request $this */
+            $rules = app(RuleGenerator::class)->generateRules($this);
+            $validator = Validator::make($this->all(), $rules, (array) config('auto-validator.error_messages', []));
+            $validated = $validator->validate();
+            $this->attributes->set('_auto_validated', $validated);
+
+            return $validator;
+        });
+
+        Request::macro('validated', function (?string $key = null, mixed $default = null): mixed {
+            /** @var Request $this */
+            $data = (array) $this->attributes->get('_auto_validated', []);
+            if ($key === null) {
+                return $data;
+            }
+
+            return data_get($data, $key, $default);
+        });
 
         $validator->extend('strong_password', function (string $attribute, mixed $value): bool {
             if (!is_string($value)) {

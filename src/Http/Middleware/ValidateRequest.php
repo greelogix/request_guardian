@@ -17,7 +17,7 @@ class ValidateRequest
 
     public function handle(Request $request, Closure $next): Response
     {
-        if (!config('auto-validator.enabled', true) || !$request->isMethodSafe(false)) {
+        if (config('auto-validator.enabled', true) && !$request->isMethodSafe(false)) {
             $rules = [];
             foreach ($request->allFiles() + $request->except(config('auto-validator.exclude_fields', [])) as $field => $value) {
                 $type = $this->resolver->resolve((string) $field, $value);
@@ -25,7 +25,8 @@ class ValidateRequest
             }
 
             if ($rules !== []) {
-                $request->validate($rules, config('auto-validator.error_messages', []));
+                $validated = $request->validate($rules, config('auto-validator.error_messages', []));
+                $request->attributes->set('_auto_validated', $validated);
             }
         }
 

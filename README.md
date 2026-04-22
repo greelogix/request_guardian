@@ -5,7 +5,8 @@
 ## Features
 
 - Zero-config validation for common request payload fields
-- Trait-based integration for Form Requests and manual controller usage
+- Automatic request validation via middleware (no trait required)
+- Optional trait integration for Form Requests/manual controller flows
 - Config-driven patterns for email, phone, URL, slug, UUID, IP, and more
 - File validation presets for images, documents, videos, and audio
 - Input sanitization (trim, strip tags, normalize spaces, etc.)
@@ -45,16 +46,29 @@ composer require greelogix/request_guardian
 After install, publish config:
 
 ```bash
-php artisan vendor:publish --provider="YourVendor\\LaravelAutoValidator\\LaravelAutoValidatorServiceProvider" --tag=auto-validator-config
+php artisan vendor:publish --provider="Greelogix\\RequestGuardian\\RequestGuardianServiceProvider" --tag=auto-validator-config
 ```
 
 ## Quick Start
 
-### Form Request
+### Automatic (No Trait Needed)
+
+Once installed, validation runs automatically for non-GET HTTP requests when `auto_middleware` is enabled (enabled by default).
+
+```php
+public function store(\Illuminate\Http\Request $request)
+{
+    // Available through Request macro:
+    $validated = $request->validated();
+    return response()->json($validated);
+}
+```
+
+### Optional Form Request Trait
 
 ```php
 use Illuminate\Foundation\Http\FormRequest;
-use YourVendor\LaravelAutoValidator\Traits\AutoValidatesTrait;
+use Greelogix\RequestGuardian\Traits\AutoValidatesTrait;
 
 class StoreUserRequest extends FormRequest
 {
@@ -67,11 +81,11 @@ class StoreUserRequest extends FormRequest
 }
 ```
 
-### Controller
+### Optional Controller Trait
 
 ```php
 use Illuminate\Http\Request;
-use YourVendor\LaravelAutoValidator\Traits\AutoValidatesTrait;
+use Greelogix\RequestGuardian\Traits\AutoValidatesTrait;
 
 class UserController
 {

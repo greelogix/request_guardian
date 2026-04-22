@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'enabled' => env('AUTO_VALIDATOR_ENABLED', true),
-    'auto_middleware' => env('AUTO_VALIDATOR_MIDDLEWARE', false),
+    'auto_middleware' => env('AUTO_VALIDATOR_MIDDLEWARE', true),
     'strict_mode' => env('AUTO_VALIDATOR_STRICT', false),
     'allowed_fields' => [],
     'field_rules' => [],
