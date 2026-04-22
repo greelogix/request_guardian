@@ -1,0 +1,40 @@
+{
+  "name": "yourvendor/laravel-auto-validator",
+  "description": "Automatic request validation for Laravel with smart field type detection.",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "illuminate/contracts": "^12.0|^13.0",
+    "illuminate/http": "^12.0|^13.0",
+    "illuminate/support": "^12.0|^13.0",
+    "illuminate/validation": "^12.0|^13.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^10.0|^11.0",
+    "phpunit/phpunit": "^11.0",
+    "nunomaduro/collision": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "YourVendor\\LaravelAutoValidator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "YourVendor\\LaravelAutoValidator\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "YourVendor\\LaravelAutoValidator\\LaravelAutoValidatorServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
