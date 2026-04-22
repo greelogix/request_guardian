@@ -18,7 +18,7 @@ class TraitValidationTest extends TestCase
 
         $request = Request::create('/users', 'POST', [
             'user_email' => 'john@example.com',
-            'contact_phone' => '+1 (555) 123-5678',
+            'contact_phone' => '5551234567',
             'display_name' => 'John Doe',
         ]);
 

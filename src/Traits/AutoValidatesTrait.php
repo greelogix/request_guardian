@@ -47,14 +47,26 @@ trait AutoValidatesTrait
 
         $rules = [];
         $exclude = config('auto-validator.exclude_fields', []);
+        $strictMode = (bool) config('auto-validator.strict_mode', false);
+        $allowedFields = (array) config('auto-validator.allowed_fields', []);
 
         foreach ($payload as $field => $value) {
             if (in_array($field, $exclude, true)) {
                 continue;
             }
 
+            if ($strictMode && $allowedFields !== [] && !in_array($field, $allowedFields, true)) {
+                $rules[$field] = ['prohibited'];
+                continue;
+            }
+
             $type = $resolver->resolve($field, $value);
             $fieldRules = $resolver->rulesForType($type, $field, $value);
+
+            $fieldOverrides = (array) config('auto-validator.field_rules', []);
+            if (isset($fieldOverrides[$field]) && is_array($fieldOverrides[$field])) {
+                $fieldRules = array_merge($fieldRules, $fieldOverrides[$field]);
+            }
 
             if (is_string($value) && $stringValidator->looksRequired($field)) {
                 array_unshift($fieldRules, 'required');
@@ -131,6 +143,10 @@ trait AutoValidatesTrait
 
             if (($options['remove_currency_symbols'] ?? true) && preg_match('/amount|price|cost|total/i', (string) $key)) {
                 $value = preg_replace('/[^\d.,\-]/', '', $value) ?? $value;
+            }
+
+            if ($options['remove_invisible_unicode'] ?? true) {
+                $value = preg_replace('/[\x{200B}-\x{200D}\x{FEFF}]/u', '', $value) ?? $value;
             }
         });
 
