@@ -1,6 +1,6 @@
-# Laravel Auto Validator
+# Request Guardian
 
-`yourvendor/laravel-auto-validator` is a Laravel package that adds automatic request validation with smart field type detection.
+`greelogix/request_guardian` is a Laravel package that adds automatic request validation with smart field type detection.
 
 ## Features
 
@@ -13,8 +13,38 @@
 
 ## Installation
 
+You can install this package in two ways.
+
+### Option A: Add repository in `composer.json` (recommended for private or GitHub-only install)
+
+```json
+{
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/greelogix/request_guardian"
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-composer require yourvendor/laravel-auto-validator
+composer require greelogix/request_guardian:dev-main
+```
+
+### Option B: Install later via `composer require`
+
+If the package is available directly to Composer (for example via Packagist), run:
+
+```bash
+composer require greelogix/request_guardian
+```
+
+After install, publish config:
+
+```bash
 php artisan vendor:publish --provider="YourVendor\\LaravelAutoValidator\\LaravelAutoValidatorServiceProvider" --tag=auto-validator-config
 ```
 
