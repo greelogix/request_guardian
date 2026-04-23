@@ -53,7 +53,12 @@ php artisan vendor:publish --provider="Greelogix\\RequestGuardian\\RequestGuardi
 
 ### Automatic (No Trait Needed)
 
-Once installed, validation runs automatically for non-GET HTTP requests when `auto_middleware` is enabled (enabled by default).
+Once installed, validation runs automatically for write requests when `auto_middleware` is enabled (enabled by default).
+
+By default, the middleware policy is:
+- validates only `POST|PUT|PATCH|DELETE`
+- skips common framework/tooling route names and paths (`ignition`, `livewire`, `horizon`, `telescope`, `sanctum`)
+- allows explicit route/path exclusions via `skip_validation.routes`
 
 ```php
 public function store(\Illuminate\Http\Request $request)

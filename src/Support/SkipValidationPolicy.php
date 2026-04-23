@@ -10,6 +10,19 @@ class SkipValidationPolicy
 {
     public function shouldSkipRequest(Request $request): bool
     {
+        $methods = (array) config('auto-validator.skip_validation.methods', ['POST', 'PUT', 'PATCH', 'DELETE']);
+        if (!in_array(strtoupper($request->method()), array_map('strtoupper', $methods), true)) {
+            return true;
+        }
+
+        if ($this->matchesRouteName($request)) {
+            return true;
+        }
+
+        if ($this->matchesPath($request)) {
+            return true;
+        }
+
         $routes = (array) config('auto-validator.skip_validation.routes', []);
 
         foreach ($routes as $routePattern) {
@@ -86,5 +99,43 @@ class SkipValidationPolicy
         $parts = explode(':', $rule, 2);
 
         return trim($parts[0]);
+    }
+
+    private function matchesRouteName(Request $request): bool
+    {
+        $routeNamePatterns = (array) config('auto-validator.skip_validation.route_names', [
+            'ignition.*',
+            'horizon.*',
+            'telescope.*',
+            'livewire.*',
+            'sanctum.*',
+        ]);
+
+        foreach ($routeNamePatterns as $routeNamePattern) {
+            if ($request->routeIs((string) $routeNamePattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function matchesPath(Request $request): bool
+    {
+        $pathPatterns = (array) config('auto-validator.skip_validation.paths', [
+            '_ignition/*',
+            'horizon/*',
+            'telescope/*',
+            'livewire/*',
+            'sanctum/*',
+        ]);
+
+        foreach ($pathPatterns as $pathPattern) {
+            if ($request->is((string) $pathPattern)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

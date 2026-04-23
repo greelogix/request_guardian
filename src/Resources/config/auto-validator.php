@@ -104,10 +104,27 @@ return [
         'special_chars_pattern' => '/[!@#$%^&*()_+\-=\[\]{};:\'\",.<>?\/\\|`~]/',
     ],
     'skip_validation' => [
-        // Skip all auto validation completely for these routes.
-        'routes' => [],
+        // Validate only these HTTP methods globally.
+        'methods' => ['POST', 'PUT', 'PATCH', 'DELETE'],
         // Example:
-        // 'routes' => ['webhook/*', 'health-check'],
+        // 'methods' => ['POST'],
+
+        // Skip validation by Laravel route names (supports wildcards).
+        'route_names' => ['ignition.*', 'horizon.*', 'telescope.*', 'livewire.*', 'sanctum.*'],
+        // Example:
+        // 'route_names' => ['admin.health.*'],
+
+        // Skip validation by URL path patterns (supports wildcards).
+        'paths' => ['_ignition/*', 'horizon/*', 'telescope/*', 'livewire/*', 'sanctum/*'],
+        // Example:
+        // 'paths' => ['internal/*'],
+
+        // Skip all auto validation completely for these routes (name or path patterns).
+        'routes' => [
+            // 'webhook/*',
+        ],
+        // Example:
+        // 'routes' => ['webhook/*', 'status/ping', 'api.internal.*'],
 
         // Skip selected fields globally.
         'fields' => [],
