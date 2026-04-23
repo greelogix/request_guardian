@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Tests\Unit;
+namespace Greelogix\RequestGuardian\Tests\Unit;
 
-use YourVendor\LaravelAutoValidator\Resolvers\FieldTypeResolver;
-use YourVendor\LaravelAutoValidator\Tests\TestCase;
+use Greelogix\RequestGuardian\Resolvers\FieldTypeResolver;
+use Greelogix\RequestGuardian\Tests\TestCase;
 
 class FieldTypeResolverTest extends TestCase
 {

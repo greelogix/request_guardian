@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Resolvers;
+namespace Greelogix\RequestGuardian\Resolvers;
 
 class FieldTypeResolver
 {

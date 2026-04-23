@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Tests\Feature;
+namespace Greelogix\RequestGuardian\Tests\Feature;
 
 use Illuminate\Http\Request;
-use YourVendor\LaravelAutoValidator\Tests\TestCase;
-use YourVendor\LaravelAutoValidator\Traits\AutoValidatesTrait;
+use Greelogix\RequestGuardian\Tests\TestCase;
+use Greelogix\RequestGuardian\Traits\AutoValidatesTrait;
 
 class TraitValidationTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Tests\Unit;
+namespace Greelogix\RequestGuardian\Tests\Unit;
 
-use YourVendor\LaravelAutoValidator\Validators\StringValidator;
-use YourVendor\LaravelAutoValidator\Tests\TestCase;
+use Greelogix\RequestGuardian\Validators\StringValidator;
+use Greelogix\RequestGuardian\Tests\TestCase;
 
 class StringValidatorTest extends TestCase
 {

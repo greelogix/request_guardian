@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Exceptions;
+namespace Greelogix\RequestGuardian\Exceptions;
 
 use RuntimeException;
 

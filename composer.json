@@ -17,13 +17,12 @@
   },
   "autoload": {
     "psr-4": {
-      "YourVendor\\LaravelAutoValidator\\": "src/",
-      "Greelogix\\RequestGuardian\\": "src-greelogix/"
+      "Greelogix\\RequestGuardian\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "YourVendor\\LaravelAutoValidator\\Tests\\": "tests/"
+      "Greelogix\\RequestGuardian\\Tests\\": "tests/"
     }
   },
   "extra": {

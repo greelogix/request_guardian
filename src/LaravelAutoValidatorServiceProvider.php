@@ -2,20 +2,23 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator;
+namespace Greelogix\RequestGuardian;
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Factory as ValidationFactory;
-use YourVendor\LaravelAutoValidator\Http\Middleware\ValidateRequest;
-use YourVendor\LaravelAutoValidator\Resolvers\FieldTypeResolver;
-use YourVendor\LaravelAutoValidator\Validators\ArrayValidator;
-use YourVendor\LaravelAutoValidator\Validators\CustomValidator;
-use YourVendor\LaravelAutoValidator\Validators\DateValidator;
-use YourVendor\LaravelAutoValidator\Validators\FileValidator;
-use YourVendor\LaravelAutoValidator\Validators\NumericValidator;
-use YourVendor\LaravelAutoValidator\Validators\StringValidator;
+use Greelogix\RequestGuardian\Contracts\RequestRuleGenerator as RequestRuleGeneratorContract;
+use Greelogix\RequestGuardian\Http\Middleware\ValidateRequest;
+use Greelogix\RequestGuardian\Resolvers\FieldTypeResolver;
+use Greelogix\RequestGuardian\Services\RequestRuleGenerator;
+use Greelogix\RequestGuardian\Support\SkipValidationPolicy;
+use Greelogix\RequestGuardian\Validators\ArrayValidator;
+use Greelogix\RequestGuardian\Validators\CustomValidator;
+use Greelogix\RequestGuardian\Validators\DateValidator;
+use Greelogix\RequestGuardian\Validators\FileValidator;
+use Greelogix\RequestGuardian\Validators\NumericValidator;
+use Greelogix\RequestGuardian\Validators\StringValidator;
 use Illuminate\Support\Facades\Validator;
 
 class LaravelAutoValidatorServiceProvider extends ServiceProvider
@@ -24,7 +27,14 @@ class LaravelAutoValidatorServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/Resources/config/auto-validator.php', 'auto-validator');
 
+        $this->app->singleton(SkipValidationPolicy::class);
         $this->app->singleton(FieldTypeResolver::class, fn () => new FieldTypeResolver(config('auto-validator', [])));
+        $this->app->singleton(RequestRuleGeneratorContract::class, RequestRuleGenerator::class);
+        $this->app->singleton(RequestRuleGenerator::class, fn ($app) => $app->make(RequestRuleGeneratorContract::class));
+
+        // Backward compatibility for previous public API.
+        $this->app->singleton(RuleGenerator::class, RuleGenerator::class);
+
         $this->app->singleton(StringValidator::class, fn () => new StringValidator(config('auto-validator', [])));
         $this->app->singleton(NumericValidator::class, fn () => new NumericValidator(config('auto-validator', [])));
         $this->app->singleton(DateValidator::class, fn () => new DateValidator(config('auto-validator', [])));
@@ -45,7 +55,7 @@ class LaravelAutoValidatorServiceProvider extends ServiceProvider
 
         Request::macro('autoValidate', function () {
             /** @var Request $this */
-            $rules = app(RuleGenerator::class)->generateRules($this);
+            $rules = app(RequestRuleGeneratorContract::class)->generate($this);
             $validator = Validator::make($this->all(), $rules, (array) config('auto-validator.error_messages', []));
             $validated = $validator->validate();
             $this->attributes->set('_auto_validated', $validated);

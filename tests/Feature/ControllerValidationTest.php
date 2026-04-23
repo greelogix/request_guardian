@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Tests\Feature;
+namespace Greelogix\RequestGuardian\Tests\Feature;
 
 use Illuminate\Http\Request;
-use YourVendor\LaravelAutoValidator\Resolvers\FieldTypeResolver;
-use YourVendor\LaravelAutoValidator\Tests\TestCase;
+use Greelogix\RequestGuardian\Resolvers\FieldTypeResolver;
+use Greelogix\RequestGuardian\Tests\TestCase;
 
 class ControllerValidationTest extends TestCase
 {

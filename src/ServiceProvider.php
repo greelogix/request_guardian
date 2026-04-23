@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator;
+namespace Greelogix\RequestGuardian;
 
 class ServiceProvider extends LaravelAutoValidatorServiceProvider
 {

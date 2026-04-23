@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Tests;
+namespace Greelogix\RequestGuardian\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use YourVendor\LaravelAutoValidator\LaravelAutoValidatorServiceProvider;
+use Greelogix\RequestGuardian\LaravelAutoValidatorServiceProvider;
 
 abstract class TestCase extends Orchestra
 {

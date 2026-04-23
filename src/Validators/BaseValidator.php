@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Validators;
+namespace Greelogix\RequestGuardian\Validators;
 
 abstract class BaseValidator
 {

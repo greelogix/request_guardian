@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Tests\Unit;
+namespace Greelogix\RequestGuardian\Tests\Unit;
 
-use YourVendor\LaravelAutoValidator\Validators\NumericValidator;
-use YourVendor\LaravelAutoValidator\Tests\TestCase;
+use Greelogix\RequestGuardian\Validators\NumericValidator;
+use Greelogix\RequestGuardian\Tests\TestCase;
 
 class NumericValidatorTest extends TestCase
 {

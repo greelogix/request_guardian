@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\LaravelAutoValidator\Traits;
+namespace Greelogix\RequestGuardian\Traits;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -10,8 +10,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as LaravelValidator;
-use YourVendor\LaravelAutoValidator\Resolvers\FieldTypeResolver;
-use YourVendor\LaravelAutoValidator\Validators\StringValidator;
+use Greelogix\RequestGuardian\Resolvers\FieldTypeResolver;
+use Greelogix\RequestGuardian\Validators\StringValidator;
 
 trait AutoValidatesTrait
 {
