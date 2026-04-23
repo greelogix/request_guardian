@@ -103,6 +103,65 @@ return [
         'require_special_chars' => true,
         'special_chars_pattern' => '/[!@#$%^&*()_+\-=\[\]{};:\'\",.<>?\/\\|`~]/',
     ],
+    'skip_validation' => [
+        // Skip all auto validation completely for these routes.
+        'routes' => [],
+        // Example:
+        // 'routes' => ['webhook/*', 'health-check'],
+
+        // Skip selected fields globally.
+        'fields' => [],
+        // Example:
+        // 'fields' => ['remember', 'captcha_token'],
+
+        // Skip all rules for detected types.
+        'types' => [],
+        // Example:
+        // 'types' => ['password', 'json'],
+
+        // Skip these rules globally.
+        'rules' => [],
+        // Example:
+        // 'rules' => ['strong_password', 'regex'],
+
+        // Skip rules only for specific fields.
+        'field_rules' => [],
+        // Example:
+        // 'field_rules' => [
+        //     'password' => ['strong_password'],
+        //     'username' => ['regex'],
+        // ],
+
+        // Skip rules only for specific detected types.
+        'type_rules' => [],
+        // Example:
+        // 'type_rules' => [
+        //     'email' => ['regex'],
+        // ],
+
+        // Skip rules only on matching routes.
+        'route_rules' => [
+            'login' => ['strong_password'],
+        ],
+        // Example:
+        // 'route_rules' => [
+        //     'login' => ['strong_password'],
+        //     'auth/login' => ['strong_password'],
+        //     'api/auth/*' => ['regex'],
+        // ],
+    ],
+    // Define rules for your own custom detected type names.
+    // Works with:
+    // 1) detection_keywords (automatic by field name), or
+    // 2) field_types (explicit field => type mapping).
+    // JSON example:
+    // {
+    //   "field_types": { "sku_code": "sku" },
+    //   "custom_type_rules": {
+    //     "sku": ["string", "regex:/^[A-Z0-9-]{6,20}$/", "max:20"]
+    //   }
+    // }
+    'custom_type_rules' => [],
     'file_uploads' => [
         'images' => [
             'extensions' => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'],

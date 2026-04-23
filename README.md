@@ -100,4 +100,30 @@ class UserController
 }
 ```
 
+## Skip Validation Configuration (JSON example)
+
+Use these keys in `config/auto-validator.php` (`skip_validation` section):
+
+```json
+{
+  "skip_validation": {
+    "routes": ["webhook/*"],
+    "fields": ["remember"],
+    "types": [],
+    "rules": [],
+    "field_rules": {
+      "password": ["strong_password"]
+    },
+    "type_rules": {
+      "password": ["strong_password"]
+    },
+    "route_rules": {
+      "login": ["strong_password"]
+    }
+  }
+}
+```
+
+This keeps auto-validation enabled, but lets you skip specific rules by field/type/route.
+
 See `docs/USAGE.md` and `docs/CONFIGURATION.md` for full details.
